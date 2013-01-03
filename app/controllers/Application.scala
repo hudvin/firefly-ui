@@ -12,11 +12,13 @@ import anorm.SqlParser._
 
 import play.api.db._
 import play.api.Play.current
+import com.nevilon.firefly.core.ESWrapper
 
 object Application extends Controller {
 
 
   def tasks = Action {
+
     Ok(views.html.index(models.Result.all(),Task.all(), taskForm))
   }
 

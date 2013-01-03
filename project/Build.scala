@@ -4,15 +4,23 @@ import PlayProject._
 
 object ApplicationBuild extends Build {
 
-    val appName         = "myFirstApp"
-    val appVersion      = "1.0-SNAPSHOT"
+    val appName         = "firefly-ui"
+    val appVersion      = "0.1-SNAPSHOT"
+
 
     val appDependencies = Seq(
-      // Add your project dependencies here,
+     "com.nevilon.firefly" % "firefly-core" % "0.1-SNAPSHOT"
+    
+  // Add your project dependencies here,
     )
 
+
     val main = PlayProject(appName, appVersion, appDependencies, mainLang = SCALA).settings(
-      // Add your own project settings here      
+     resolvers += (
+    "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository"
+)
+      
+// Add your own project settings here      
     )
 
 }
