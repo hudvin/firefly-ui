@@ -17,7 +17,7 @@
 
 'use strict';
 
-var DEFAULT_URL = 'compressed.tracemonkey-pldi-09.pdf';
+var DEFAULT_URL = '/assets/pdfjs/compressed.tracemonkey-pldi-09.pdf';
 var DEFAULT_SCALE = 'auto';
 var DEFAULT_SCALE_DELTA = 1.1;
 var UNKNOWN_SCALE = 0;
@@ -43,7 +43,7 @@ var FindStates = {
   FIND_PENDING: 3
 };
 
-  PDFJS.workerSrc = 'pdf.js';
+  PDFJS.workerSrc = '/assets/pdfjs/pdf.js';
 
 var mozL10n = document.mozL10n || document.webL10n;
 
