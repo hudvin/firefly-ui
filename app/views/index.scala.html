@@ -1,40 +1,76 @@
-@(results:List[models.Result],tasks: List[Task], taskForm: Form[String])
+@(searchResult: com.nevilon.firefly.core.QueryResult, results: List[models.Result], tasks: List[Task], taskForm: Form[String])
 
 @import helper._
 
 @main("Todo list") {
 
-    <h1>@tasks.size task(s)</h1>
+    <h2>Search</h2>
 
+    @form(routes.Application.search) {
+        @inputText(taskForm("label"), '_label -> "What are your looking for?", '_showConstraints -> false)
+        <input type="submit" value="Search">
+    }
+
+    <h1>@searchResult.hits.size results(s)</h1>
     <ul>
-    @tasks.map { task =>
+    @searchResult.hits.map { hit =>
         <li>
-            @task.label
+        @hit.fields.map{item=>
+            <br/>
+            <b>@item._1</b>: @item._2
 
-            @form(routes.Application.deleteTask(task.id)) {
-                <input type="submit" value="Delete">
+        }
+
+
+        @for(item <- hit.highlight) {
+            @for(line<-item._2){
+                @Html(line)
             }
-        </li>
-    }
-    </ul>
+        }
 
-    <ul>
-    @results.map { task =>
-        <li>
-            @task.label
+        <br/>
 
-        </li>
-    }
-    </ul>
 
-    <h2>Add a new task</h2>
+    <br/>
 
-    @form(routes.Application.newTask) {
 
-        @inputText(taskForm("label"))
+    <a href='@routes.Application.file(hit.id)'>Download</a>
+    original filename: @(Application.getFileDoc(hit.id).get("local_name"))
+</>
+}
+</ul>
 
-        <input type="submit" value="Create">
 
-    }
+<h1>@tasks.size task(s)</h1>
+
+<ul>
+@tasks.map { task =>
+    <li>
+        @task.label
+
+        @form(routes.Application.deleteTask(task.id)) {
+            <input type="submit" value="Delete">
+        }
+    </li>
+}
+</ul>
+
+<ul>
+@results.map { task =>
+    <li>
+    @task.label
+    </li>
+}
+</ul>
+
+<h2>Add a new task</h2>
+
+@form(routes.Application.newTask) {
+
+    @inputText(taskForm("label"))
+
+    <input type="submit" value="Create">
 
 }
+
+    }
