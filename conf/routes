@@ -15,3 +15,4 @@ POST    /tasks                  controllers.Application.newTask
 POST    /search                 controllers.Application.search
 GET     /file                   controllers.Application.file(id:String)
 POST    /tasks/:id/delete       controllers.Application.deleteTask(id: Long)
+GET     /viewer                 controllers.Application.viewer(id:String)

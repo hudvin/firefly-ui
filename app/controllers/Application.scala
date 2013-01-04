@@ -66,16 +66,17 @@ object Application extends Controller {
   }
 
   def file(id: String) = Action {
-
     val file = mongo.getFile(id)
-
     val data = file.getInputStream
     val dataContent: Enumerator[Array[Byte]] = Enumerator.fromStream(data)
     //todo - get file size!
     Ok.stream(dataContent).
       withHeaders(CONTENT_DISPOSITION -> "attachment; filename=\"paper.pdf\"").
       withHeaders(CONTENT_LENGTH -> file.getLength.toString)
+  }
 
+  def viewer(id:String) = Action{
+    Ok(views.html.viewer(id))
   }
 
   def search = Action {
