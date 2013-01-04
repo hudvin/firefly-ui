@@ -17,7 +17,7 @@
 
 'use strict';
 
-var DEFAULT_URL = '/assets/pdfjs/compressed.tracemonkey-pldi-09.pdf';
+var DEFAULT_URL = '';
 var DEFAULT_SCALE = 'auto';
 var DEFAULT_SCALE_DELTA = 1.1;
 var UNKNOWN_SCALE = 0;
@@ -2647,15 +2647,23 @@ var TextLayerBuilder = function textLayerBuilder(textLayerDiv, pageIdx) {
 
     this.renderMatches(this.matches);
   };
-};
+}
 
 document.addEventListener('DOMContentLoaded', function webViewerLoad(evt) {
   PDFView.initialize();
   var params = PDFView.parseQueryString(document.location.search.substring(1));
+  var host = window.location.hostname
+  if (! ((params===undefined) &&(params.id===undefined)) ){
+      params.file="file?id="+params.id
+  }
 
-  var file = params.file || DEFAULT_URL;
+  //DEFAULT_URL = document.body.pdf
+  //DEFAULT_URL = 'http://127.0.0.1:9000/file?id=NJtn4z7UQA2zbxXpWJf0YQ';
+  //var file = params.file || DEFAULT_URL;
 
-  if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {
+   var file = params.file || DEFAULT_URL;
+
+    if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {
     document.getElementById('openFile').setAttribute('hidden', 'true');
   } else {
     document.getElementById('fileInput').value = null;
